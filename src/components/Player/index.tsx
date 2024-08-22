@@ -4,12 +4,12 @@ import ArrowIcon from "./icons/arrow";
 import AnimationButton from "./Buttons";
 import "../../App.css";
 import UploadIcon from "./icons/upload";
+import VolumeCotroller from "./VolumeController";
 
 function Player() {
   const soundController = useRef<undefined | SoundDriver>(undefined);
   const [loading, setLoading] = useState(false);
   const [showInput, setShowInput] = useState(true);
-
   const uploadAudio = useCallback(async (event: any) => {
     const { files } = event.target; // files list
 
@@ -55,22 +55,15 @@ function Player() {
     []
   );
 
-  const onVolumeChange = useCallback(
-    (event: any) => {
-      soundController.current?.changeVolume(Number(event.target.value));
-    },
-    [soundController]
-  );
-
   const onDrop = useCallback((e: any) => {
     e.preventDefault();
-    const { files } = e.dataTransfer; // Используйте dataTransfer, а не event.target
+    const { files } = e.dataTransfer;
 
     if (!files || !files.length) {
-      return; // Проверка наличия файлов
+      return;
     }
 
-    uploadAudio({ target: { files } }); // Обращение к uploadAudio с файлом
+    uploadAudio({ target: { files } });
   }, []);
   return (
     <div
@@ -109,15 +102,7 @@ function Player() {
                 />
               );
             })}{" "}
-            <input
-              type="range"
-              onChange={onVolumeChange}
-              defaultValue={1}
-              min={-1}
-              max={1}
-              step={0.01}
-              className="volume-controller"
-            />
+            <VolumeCotroller soundController={soundController} />
           </div>
         )}
     </div>

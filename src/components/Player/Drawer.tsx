@@ -68,7 +68,7 @@ class Drawer {
     svg // const grid = svg
       .append("g") // add group "g" for grid
       .attr("stroke-width", 0.5) // grid lines width
-      .attr("stroke", "#D6E5D6") // grid lines color
+      .attr("stroke", "#a6d6d6") // grid lines color
       .call(
         (g) =>
           g
@@ -110,7 +110,7 @@ class Drawer {
     g.selectAll("rect")
       .data(audioData) // connect audio data to rects
       .join("rect") // bring together data and create rects
-      .attr("fill", "#03A300")
+      .attr("fill", "#a6d6d6")
       .attr("height", (d) => yScale(d))
       .attr("width", () => band * padding)
       .attr("x", (_, i) => xScale(i)) // x position (i - index of element, that is passed to ".data()")
@@ -130,10 +130,20 @@ class Drawer {
       // eslint-disable-next-line @typescript-eslint/no-shadow
       .call((g) => g.select(".domain").remove()) // !!! why !!!
       .attr("stroke-width", 0) // tracings width
-      .style("color", "#95A17D")
+      .style("color", "#f5f5f5")
       .style("font-size", 11)
       .style("font-wight", 400)
+      .style("opacity", "60%")
       .call(d3.axisBottom(bandScale.copy())); // creates bottom axis with marks' positions "bandScale"
+
+    // const progressLine = svg
+    //   .append("line")
+    //   .attr("x1", margin.left)
+    //   .attr("y1", margin.top)
+    //   .attr("x2", margin.left)
+    //   .attr("y2", height - margin.bottom)
+    //   .attr("stroke", "#FF0000")
+    //   .attr("stroke-width", 2);
 
     return svg;
   }
